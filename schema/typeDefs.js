@@ -2,14 +2,16 @@ const typeDefs = `#graphql
     type Book {
         id: ID!
         title: String!
-        author: String!
+        gener: String!
         authorId: ID!
+        author: Author
     }
 
     type Author {
         id: ID!
         name: String!
         age: Int!
+        books: [Book]
     }
 
     type Query {
@@ -21,7 +23,7 @@ const typeDefs = `#graphql
     
     type Mutation {
         addAuthor(name: String!, age: Int!): Author
-        addBook(title: String!, author: String!, authorId: ID!): Book   
+        addBook(title: String!, gener: String!, authorId: ID!): Book   
     }
 `;
 

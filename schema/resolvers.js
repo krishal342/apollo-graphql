@@ -26,7 +26,7 @@ const resolvers = {
         addAuthor: (_, { name, age }) => {
             try{
                 const newAuthor = {
-                    id: String(dummyAuthors.length + 1),
+                    id: String(dummyAuthors.length + 101),
                     name,
                     age
                 };
@@ -36,12 +36,12 @@ const resolvers = {
                 throw new Error('Failed to add author');
             }
         },
-        addBook: (_, { title, author, authorId }) => {
+        addBook: (_, { title, gener, authorId }) => {
             try {
                 const newBook = {
                     id: String(dummyBooks.length + 1),
                     title,
-                    author,
+                    gener,
                     authorId
                 };
                 dummyBooks.push(newBook);
@@ -51,7 +51,26 @@ const resolvers = {
             }
 
         }
+    },
+    Book:{
+        author: (parent) =>{
+            try{
+                return dummyAuthors.find(author => author.id === parent.authorId);
+            }catch(err){
+                throw new Error('Failed to fetch author for the book');
+            }
+        }
+    },
+    Author:{
+        books:(parent) =>{
+            try{
+                return dummyBooks.filter(book => book.authorId === parent.id);
+            }catch(err){
+                throw new Error('Failed to fetch books for the author');
+            }
+        }
     }
+
 };
 
 export default resolvers;
